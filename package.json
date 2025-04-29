@@ -1,11 +1,12 @@
 {
   "name": "crud-com-sqlite",
   "version": "1.0.0",
-  "description": "usando o CRUD com SQLite",
-  "main": "index.js",
-  "type":"module",
+  "description": "",
+  "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch src/server.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/Luanavitoria20/CRUD-com-SQLite#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "sqlite3": "^5.1.7"
   }
 }
