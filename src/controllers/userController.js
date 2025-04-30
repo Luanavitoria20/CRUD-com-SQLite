@@ -1,16 +1,97 @@
-//[GET]
-export const getAllUsers = (req, res)=>{
-    res.status(200).json({
-        mensagem: "Rota GET users funcionando!"
-    })
+import {PrismaClient} from "@prisma/client"
+import e from "express"
+
+const prisma = new PrismaClient()
+
+//[GET] professor
+export const getAllUsers = async (req, res)=>{
+   
+    try{
+        const users = await prisma.user.findMany()
+        res.status(200).json(users)
+    } catch(error){
+        res.status(500).json({
+            mensagem:"Erro ao criar o novo usuario",
+            erro:error.message
+        })
+    }
 }
 
+/*
 //[POST]
 export const Newuser = (req, res)=>{
-    const {nome, email} = req.body
-    const novoUser = {
-      nome: nome,
-      email: email
-    };
+    const {name, email} = req.body
+    const novoUser ={ 
+    nome: nome,
+    email: email
+};
     res.status(200).json(novoUser)
 }
+*/
+
+//professor fez
+//[POST]
+export const createUser = async(req, res)=>{
+    const {name,email} =  req.body
+    try{
+        //tento fazer algo aqui
+        const NewUser= await prisma.user.create({
+            data: {
+                name,
+                email
+            }
+        })
+        res.status(201).json(NewUser)
+    }catch (error){
+     //se der erro faça isso aqui
+      res.status(500).json({
+        mensagem:"Erro ao criar o novo usuario",
+        erro:error.message //tem que ser ingles (message)
+      })
+    }
+}
+
+//
+export const updateUser = async (req,res)=>{
+
+    const id = req.params.id
+    const {name, email} = req.body
+
+    try{
+        const updatedUser = await prisma.user.update({
+            where: {id: parseInt(id)},
+            data:{name, email}
+        })
+        res.status(200).json(updateUser)
+    }catch(error){
+        res.status(400).json({
+            mensagem:"Erro ao criar o novo usuario",
+            erro:error.message 
+          })
+    }
+}
+
+//[DELETE] prof
+export const deleteUser = async (req, res)=>{
+
+    /*await prisma.user.deleteMany({})
+    res.status(404)*/
+
+    try{
+        const id = req.params.id
+         await prisma.user.delete({
+        where: { id: Number(id)},
+    });
+
+    res.status(204).send()
+    }catch (error){
+        res.status(400).json({
+            mensagem:"Erro ao criar o novo usuario",
+            erro:error.message 
+          })
+    }
+
+}  
+
+
+

@@ -1,3 +1,5 @@
+// inicia e configurar 
+//usando express e routes
 import express from "express"
 import userRoutes from "./routes/userRoutes.js"
 

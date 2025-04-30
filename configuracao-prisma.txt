@@ -1,0 +1,13 @@
+Aula 30/04/2025 - relatando a aula de ontem 29/04/2025
+
+1. repositório no GitHub e deu um clone
+2. iniciou o projeto node - 'npm init -y'
+3. instalou pacotes:
+- 'npm install express' , 
+- 'sqlite3'
+-'npx prisma init' = iniciar o modo
+- ''
+4. configurou o schema.prisma (erro)
+5. npx prisma migrate dev --name init database
+6. executar o prisma studio:
+- 'npx prisma studio'
