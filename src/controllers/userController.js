@@ -32,13 +32,14 @@ export const Newuser = (req, res)=>{
 //professor fez
 //[POST]
 export const createUser = async(req, res)=>{
-    const {name,email} =  req.body
+    const {name,email, password} =  req.body
     try{
         //tento fazer algo aqui
         const NewUser= await prisma.user.create({
             data: {
                 name,
-                email
+                email,
+                password
             }
         })
         res.status(201).json(NewUser)
