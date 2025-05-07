@@ -2,6 +2,7 @@
 //usando express e routes
 import express from "express"
 import userRoutes from "./routes/userRoutes.js"
+import productRoutes from "./routes/productRoutes.js"
 
 const app = express()
 
@@ -11,7 +12,7 @@ app.use(express.json())
 
 /*Define o endpoint (prefixo)/userpara as rotas de usuario*/
 app.use("/users", userRoutes)
-
+app.use("/products", productRoutes);
 
 
 export default app;
