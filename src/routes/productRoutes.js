@@ -10,4 +10,4 @@ router.post('/',createProduct); // criar produto
 router.put('/:id',updateProduct) // atualizar
 router.delete('/:id',deleteProduct) // remove
 router.get('/:id', getProductId); // obter id do produto
-export default router
+export default router 
