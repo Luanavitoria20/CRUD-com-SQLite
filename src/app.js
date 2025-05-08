@@ -3,7 +3,6 @@
 import express from "express"
 import userRoutes from "./routes/userRoutes.js"
 import productRoutes from "./routes/productRoutes.js"
-
 const app = express()
 
 /* Permite que o Express entenda
