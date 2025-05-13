@@ -4,16 +4,27 @@ import {createUser,
     deleteUser, 
     updateUser,
     getUserId,
-    registerUser} from "../controllers/userController.js"
+    registerUser,
+    login
+} from "../controllers/userController.js"
 import {validate} from "../middleware/validate.js"
-import {createUserSchema, updateUserSchema} from "../schemas/userSchemas.js"
+import {createUserSchema, updateUserSchema, loginSchema} from "../schemas/userSchemas.js"
+import {authenticate} from '../middleware/authentication.js'
 
 const router = express.Router()
 
 router.get('/',getAllUsers)
+
 router.post('/', validate(createUserSchema), createUser)
-router.delete('/:id',deleteUser)
-router.put('/:id',validate(updateUserSchema), updateUser)
+
+router.put('/:id',authenticate, validate(updateUserSchema), updateUser)
+
+router.delete('/:id', authenticate, deleteUser)
+
 router.get('/:id', getUserId)
+
 router.post('/register', registerUser)
+
+router.post('/login',validate(loginSchema), login)
+
 export default router

@@ -1,5 +1,5 @@
 import {PrismaClient} from "@prisma/client"
-import { generateToken, hashPassword } from "../utils/auth.js"
+import { comparePassword, generateToken, hashPassword } from "../utils/auth.js"
 
 const prisma = new PrismaClient()
 
@@ -145,6 +145,49 @@ export const registerUser = async (req, res) => {
 
             erro: "Erro ao criar o usuario!",
             detalhes: error.message
+        })
+    }
+}
+
+
+export const login = async (req, res)=>{
+    const {email, password} = req.body
+
+    try{
+        //1. Buscar o usuario pelo email
+        const user = await prisma.user.findUnique({
+            where: {email}
+        }) 
+        if(!user){
+            return res.status(401).json({
+                mensagem: "Credenciais Inválidas!"
+            })
+        }
+
+        //2. Compararca senha fornecida com senha hash armazenada
+        const passwordMatch = await comparePassword(
+            password, user.password
+        )
+        if(!passwordMatch){
+            return res.status(401).json({
+                mensagem: "Credenciais Inválidas!"
+            })
+        }
+        
+        // 3. Gerar o token jwt
+        const token = generateToken(user)
+
+        //4. Envia como resposta o usuario e o token
+        res.json({
+            usuario: {hame: user.name, email: user.email},
+            token
+        })
+
+
+    }catch(error){
+        res.status(500).json({
+            mensagem: 'Erro ao fazer login!',
+            erro: error.message
         })
     }
 }
